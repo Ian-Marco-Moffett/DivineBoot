@@ -26,11 +26,11 @@ link: buildc
 
 .PHONY: buildc
 buildc:
+	@ git submodule init
+	@ git submodule update
 	cd gnu-efi; make
 	gcc $(CFLAGS) -c $$(find src/ -name "*.c") -o main.o
 
 .PHONY: run
 run:
-	@ git submodule init
-	@ git submodule update
 	qemu-system-x86_64 -drive file=$(OUTPUT_IMG) -m 512M -cpu qemu64 -drive if=pflash,format=raw,unit=0,file="OVMFbin/OVMF_CODE-pure-efi.fd",readonly=on -drive if=pflash,format=raw,unit=1,file="OVMFbin/OVMF_VARS-pure-efi.fd" -net none -d int -no-reboot
