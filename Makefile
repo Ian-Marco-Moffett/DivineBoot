@@ -26,6 +26,7 @@ link: buildc
 
 .PHONY: buildc
 buildc:
+	@ git update-index --assume-unchanged OVMFbin
 	@ git submodule init
 	@ git submodule update
 	cd gnu-efi; make
